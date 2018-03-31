@@ -1,4 +1,4 @@
-# AgileIOT
+# Agile_IOT
 This is a project from Agile Network Service Development subject.
 It's objective is to simulate an small IOT device.
 We are goin to use Paho Client libraries to simulate the sensor and publish data to the server (iot.eclipse.org)
