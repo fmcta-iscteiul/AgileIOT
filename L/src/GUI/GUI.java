@@ -1,3 +1,4 @@
+package GUI;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -7,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -18,16 +20,19 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
 
-public class Tester {
+import GUI.SensorFactory.sensorType;
+
+public class GUI{
 
 	protected static String topic        = "MQTT Examples";
 	protected static String content      = "Message from MqttPublishSample";
-	protected final int qos             = 2;
+	protected static final int qos             = 2;
 	protected static final String broker       = "tcp://iot.eclipse.org:1883";
 	protected final String clientId     = "JavaSample";
 	protected MemoryPersistence persistence = new MemoryPersistence();
-	protected MqttClient sampleClient;
+	public static MqttClient sampleClient;
 	protected MqttConnectOptions connOpts;
 
 
@@ -41,8 +46,96 @@ public class Tester {
 				public void run() {
 					JFrame frame = new JFrame("IOT Sensor Simulator");
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-					frame.setSize(500, 200);
-					frame.setLayout(new BorderLayout());
+					frame.setSize(700, 400);
+
+					frame.setLayout(new GridLayout(2, 0));
+					///////////////////////////////////////////////////AUTO////////////////////////////////
+
+					//Upper panel
+					JPanel upperPanel = new JPanel();
+					upperPanel.setLayout(new BorderLayout());
+
+					//AutoPanel
+					JPanel autoPanel = new JPanel();
+					autoPanel.setLayout(new GridLayout(1, 3));
+
+
+					//Thermometer sensor
+					JButton thermoButton = new JButton("Thermometer sensor");
+					thermoButton.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							
+							try {
+								
+								SensorFactory.makeSensor(sensorType.THERMO);
+							} catch (InvalidValue e1) {
+								JOptionPane.showMessageDialog(null, "There are already "+ SensorFactory.MAX_SENSORS +" sensors running");
+							}
+
+						}
+					});
+					autoPanel.add(thermoButton);
+
+					//Country sensor
+					JButton countryButton = new JButton("Country");
+					countryButton.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {	
+							try {
+								SensorFactory.makeSensor(sensorType.COUNTRIES);
+							} catch (InvalidValue e1) {
+								JOptionPane.showMessageDialog(null, "There are already "+ SensorFactory.MAX_SENSORS +" sensors running");
+								e1.printStackTrace();
+							}
+
+						}
+					});
+					autoPanel.add(countryButton);
+
+					//Roulette sensor
+					JButton rouletteButton = new JButton("Roulette");
+					rouletteButton.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							try {
+								SensorFactory.makeSensor(sensorType.ROULETTE);
+							} catch (InvalidValue e1) {
+								JOptionPane.showMessageDialog(null, "There are already "+ SensorFactory.MAX_SENSORS +" sensors running");
+								e1.printStackTrace();
+							}
+
+						}
+					});
+					autoPanel.add(rouletteButton);
+
+					//Adding automatic panel
+
+					JLabel autoLabel = new JLabel("Sensor Modules");
+					autoLabel.setHorizontalAlignment(JLabel.CENTER);
+
+					upperPanel.add(autoLabel,BorderLayout.NORTH);
+
+					upperPanel.add(autoPanel,BorderLayout.CENTER);		
+
+					frame.add(upperPanel);
+
+
+
+					///////////////////////////////////////////////////MANUAL//////////////////////////////	
+
+					//UpperPane
+					JPanel lowerPanel = new JPanel();
+					lowerPanel.setLayout(new BorderLayout());
+
+
+					//Manual Panel
+					JPanel manualPanel = new JPanel();
+					manualPanel.setLayout(new BorderLayout());
+
 
 					//Topic Panel
 					JPanel topicPanel = new JPanel();
@@ -51,7 +144,7 @@ public class Tester {
 					JTextField topicText = new JTextField();
 					topicPanel.add(topicLabel);
 					topicPanel.add(topicText);
-					frame.add(topicPanel, BorderLayout.NORTH);
+					manualPanel.add(topicPanel, BorderLayout.NORTH);
 
 					//Message Panel
 					JPanel messagePanel = new JPanel();
@@ -61,7 +154,7 @@ public class Tester {
 					JScrollPane scrollPane = new JScrollPane(messageText);
 					messagePanel.add(messageLabel,BorderLayout.NORTH);
 					messagePanel.add(scrollPane,BorderLayout.CENTER);
-					frame.add(messagePanel, BorderLayout.CENTER);
+					manualPanel.add(messagePanel, BorderLayout.CENTER);
 
 					//Send Button
 					JPanel sendPanel = new JPanel();
@@ -74,7 +167,6 @@ public class Tester {
 							if(topicText.getText().isEmpty()) {
 								topic= "[no decision]";
 							}else
-
 								topic= topicText.getText();
 							if(messageText.getText().isEmpty()) {
 								content= "[nothing]";
@@ -91,24 +183,37 @@ public class Tester {
 						public void actionPerformed(ActionEvent e) {
 							doDisconnect();
 							frame.dispose();
-
 						}
 					});
 					sendPanel.add(disconnectButton);
 					sendPanel.add(new JLabel());
 					sendPanel.add(sendButton);
-					frame.add(sendPanel,BorderLayout.SOUTH);
-					frame.setVisible(true);
+					manualPanel.add(sendPanel,BorderLayout.SOUTH);
 
+					//Adding Manual pane
+					JLabel manualLabel = new JLabel("Manual");
+					manualLabel.setHorizontalAlignment(JLabel.CENTER);
+
+					lowerPanel.add(manualLabel, BorderLayout.NORTH);
+
+					lowerPanel.add(manualPanel, BorderLayout.CENTER);
+
+
+					frame.add(lowerPanel);
+
+
+					///////////////////////////////////////////////////MANUAL//////////////////////////////	
+
+
+					//Visibility
+					frame.setVisible(true);
 
 				}
 			});
 		} catch (InvocationTargetException | InterruptedException e) {
 			e.printStackTrace();
 		}
-
 		doConnection();
-		doPublish();
 	}
 
 
@@ -155,20 +260,15 @@ public class Tester {
 		System.exit(0);
 
 	}
+	public synchronized static void sensorPublish(String Stopic, String Scontent) {
 
-
-	public static void main(String[] args) {
-
-		Tester t = new Tester();
-
+		MqttMessage message = new MqttMessage(Scontent.getBytes());
+		message.setQos(qos);
 		try {
-			t.workCycle();
-		} catch (MqttException e1) {
-			e1.printStackTrace();
-		}
-
+			sampleClient.publish(Stopic, message);
+		} catch (MqttException e) {
+			e.printStackTrace();
+		}		
 	}
-
-
 }
 
