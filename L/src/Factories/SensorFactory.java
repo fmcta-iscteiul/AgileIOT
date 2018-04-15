@@ -1,8 +1,12 @@
-package GUI;
+package Factories;
 
 import javax.swing.JOptionPane;
 
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
+
+import Threads.CountryThread;
+import Threads.RouletteThread;
+import Threads.ThermoThread;
 
 public class SensorFactory {
 

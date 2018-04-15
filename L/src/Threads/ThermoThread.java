@@ -1,6 +1,8 @@
-package GUI;
+package Threads;
 
 import java.util.Random;
+
+import GUI.GUI;
 
 public class ThermoThread extends Thread {
 

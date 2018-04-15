@@ -1,9 +1,11 @@
-package GUI;
+package Threads;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.Scanner;
+
+import GUI.GUI;
 
 public class CountryThread extends Thread {
 

@@ -22,7 +22,8 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
 
-import GUI.SensorFactory.sensorType;
+import Factories.SensorFactory;
+import Factories.SensorFactory.sensorType;
 
 public class GUI{
 
