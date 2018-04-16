@@ -7,7 +7,6 @@ public class Launch {
 
 
 	public static void main(String[] args) {
-
 		GUI t = new GUI();
 		try {
 			t.workCycle();

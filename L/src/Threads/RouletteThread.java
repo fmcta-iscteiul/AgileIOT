@@ -11,10 +11,12 @@ import GUI.GUI;
 public class RouletteThread extends Thread {
 
 	private static HashMap<String, String > roulette = new HashMap<String,String>(); 
-	
+
+
 	public RouletteThread() {
 		ReadFile();	
 	}
+	
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
@@ -22,7 +24,7 @@ public class RouletteThread extends Thread {
 		int choice = r.nextInt(37);
 		GUI.sensorPublish("Agile_Roulette","Your number is: "+choice+" ["+roulette.get(""+choice)+"]" );
 		}
-	}
+}
 
 	private void ReadFile() {
 		
@@ -36,8 +38,10 @@ public class RouletteThread extends Thread {
 			}
 			scan.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}		
+	}
+	
+	public HashMap<String, String> getRoulette() {
+		return roulette;
 	}
 }

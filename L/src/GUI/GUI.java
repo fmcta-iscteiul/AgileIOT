@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,17 +29,19 @@ import Factories.SensorFactory.sensorType;
 public class GUI{
 
 	protected static String topic        = "MQTT Examples";
-	protected static String content      = "Message from MqttPublishSample";
+	protected static String content               ="";
 	protected static final int qos             = 2;
 	protected static final String broker       = "tcp://iot.eclipse.org:1883";
 	protected final String clientId     = "JavaSample";
 	protected MemoryPersistence persistence = new MemoryPersistence();
+
 	public static MqttClient sampleClient;
 	protected MqttConnectOptions connOpts;
 
+	protected static ArrayList<JButton> buttons = new ArrayList<>();
+
 
 	public void workCycle() throws MqttException {
-
 		doCreate();
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
@@ -63,13 +66,12 @@ public class GUI{
 
 					//Thermometer sensor
 					JButton thermoButton = new JButton("Thermometer sensor");
+					buttons.add(thermoButton);
 					thermoButton.addActionListener(new ActionListener() {
-
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							
+
 							try {
-								
 								SensorFactory.makeSensor(sensorType.THERMO);
 							} catch (InvalidValue e1) {
 								JOptionPane.showMessageDialog(null, "There are already "+ SensorFactory.MAX_SENSORS +" sensors running");
@@ -81,6 +83,7 @@ public class GUI{
 
 					//Country sensor
 					JButton countryButton = new JButton("Country");
+					buttons.add(countryButton);
 					countryButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -98,6 +101,7 @@ public class GUI{
 
 					//Roulette sensor
 					JButton rouletteButton = new JButton("Roulette");
+					buttons.add(rouletteButton);
 					rouletteButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -161,6 +165,7 @@ public class GUI{
 					JPanel sendPanel = new JPanel();
 					sendPanel.setLayout(new GridLayout(1,3));
 					JButton sendButton = new JButton(" Send ");
+					buttons.add(sendButton);
 					sendButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -178,6 +183,7 @@ public class GUI{
 						}
 					});
 					JButton disconnectButton = new JButton("Disconnect");
+					buttons.add(disconnectButton);
 					disconnectButton.addActionListener(new ActionListener() {
 
 						@Override
@@ -186,6 +192,7 @@ public class GUI{
 							frame.dispose();
 						}
 					});
+
 					sendPanel.add(disconnectButton);
 					sendPanel.add(new JLabel());
 					sendPanel.add(sendButton);
@@ -218,18 +225,20 @@ public class GUI{
 	}
 
 
-	private void doCreate() {
+	public void doCreate() {
 		try {
 			sampleClient = new MqttClient(broker, clientId, persistence);
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
+
 		connOpts = new MqttConnectOptions();
 		connOpts.setCleanSession(true);
+
 		System.out.println("Connecting to broker: "+broker);
 	}
 
-	private void doConnection() {
+	public void doConnection() {
 		try {
 			sampleClient.connect(connOpts);
 		} catch (MqttException e) {
@@ -238,19 +247,19 @@ public class GUI{
 		System.out.println("Connected");
 	}
 
-	private void doPublish() {
+	public void doPublish() {
 		System.out.println("Publishing message: "+content +" on topic: "+ topic);
 		MqttMessage message = new MqttMessage(content.getBytes());
 		message.setQos(qos);
 		try {
-			sampleClient.publish(topic, message);
+			sampleClient.publish(topic, message);		
 		} catch (MqttException e) {
 			e.printStackTrace();
 		}
 
 	}
 
-	private void doDisconnect() {
+	public void doDisconnect() {
 		System.out.println("Message published");
 		try {
 			sampleClient.disconnect();
@@ -258,7 +267,6 @@ public class GUI{
 			e.printStackTrace();
 		}
 		System.out.println("Disconnected");
-		System.exit(0);
 
 	}
 	public synchronized static void sensorPublish(String Stopic, String Scontent) {
@@ -271,5 +279,41 @@ public class GUI{
 			e.printStackTrace();
 		}		
 	}
+	/////////////Getters/////////////////////
+
+	public static String getTopic() {
+		return topic;
+	}
+
+
+	public static int getQos() {
+		return qos;
+	}
+
+
+	public static String getBroker() {
+		return broker;
+	}
+
+
+	public String getClientId() {
+		return clientId;
+	}
+
+
+	public static MqttClient getSampleClient() {
+		return sampleClient;
+	}
+
+
+	public MqttConnectOptions getConnOpts() {
+		return connOpts;
+	}
+
+
+	public ArrayList<JButton> getButtons() {
+		return buttons;
+	}
+
 }
 

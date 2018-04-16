@@ -9,11 +9,16 @@ import GUI.GUI;
 
 public class CountryThread extends Thread {
 
-	private String [] countries = new String[197];
+
+
+	private static String [] countries;
 
 	public CountryThread() {
+		countries = new String[197];
 		ReadFile();
 	}
+
+	
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
@@ -21,7 +26,7 @@ public class CountryThread extends Thread {
 			int choice = r.nextInt(197);
 			GUI.sensorPublish("Agile_Countries", countries[choice]);
 		}
-	}
+}
 
 	private void ReadFile() {
 		File countryFile = new File("./Docs/Countries");
@@ -33,10 +38,15 @@ public class CountryThread extends Thread {
 				iteration++;
 			}
 			scan.close();
+			System.out.println(countries.length);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}
 
+	}
+
+
+	public String[] getCountries() {
+		return countries;
 	}
 
 
