@@ -19,6 +19,7 @@ public class CountryThread extends Thread {
 	}
 
 	
+	
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
@@ -29,7 +30,7 @@ public class CountryThread extends Thread {
 }
 
 	private void ReadFile() {
-		File countryFile = new File("./Docs/Countries");
+		File countryFile = new File("C:/Users/Filipe/git/AgileIOT/L/Docs/Countries");
 		int iteration=0;
 		try {
 			Scanner scan = new Scanner(countryFile);

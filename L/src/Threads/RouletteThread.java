@@ -28,7 +28,7 @@ public class RouletteThread extends Thread {
 
 	private void ReadFile() {
 		
-		File roulette_file = new File("./Docs/Roulette");	
+		File roulette_file = new File("C:/Users/Filipe/git/AgileIOT/L/Docs/Roulette");	
 		try {
 			Scanner scan = new Scanner(roulette_file);
 			

@@ -12,6 +12,7 @@ class FactoryTester {
 
 	@Test
 	void testFactory() throws InvalidValue {
+	
 		
 		@SuppressWarnings("unused")
 		SensorFactory dummyFactory = new SensorFactory(); 
