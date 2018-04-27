@@ -4,11 +4,16 @@ import java.util.Random;
 
 import GUI.GUI;
 
+/**
+ * This Thread represents a thermometer 
+ * @author Group B
+ *
+ */
 public class ThermoThread extends Thread {
 
-
-	public ThermoThread() {
-	}
+/**
+ * Sends the broker random temperature readings
+ */
 
 	@Override
 	public void run() {

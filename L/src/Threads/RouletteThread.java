@@ -11,17 +11,27 @@ import java.util.Random;
 import java.util.Scanner;
 
 import GUI.GUI;
-
+/**
+ * This class represents a sensor installed in a real roulette which is part of internet gamble game.
+ * @author Group B
+ *
+ */
 public class RouletteThread extends Thread {
 
 	private static HashMap<String, String > roulette = new HashMap<String,String>(); 
 
-
+	
+/**
+ * Creates the Thread and fills the hashmap with information
+ */
 	public RouletteThread() {
 		ReadFile();	
 	}
 
 
+	/**
+	 * Published to the broker the roulette information
+	 */
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
@@ -31,8 +41,10 @@ public class RouletteThread extends Thread {
 		}
 	}
 
+	/**
+	 * Reads from selected file and maps the number to it's color
+	 */
 	private void ReadFile() {
-
 		InputStream in = getClass().getResourceAsStream("/Threads/Roulette");	
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
@@ -49,7 +61,10 @@ public class RouletteThread extends Thread {
 	}
 
 
-
+/**
+ * Returns the roulette hasmap
+ * @return roulette map
+ */
 	public HashMap<String, String> getRoulette() {
 		return roulette;
 	}

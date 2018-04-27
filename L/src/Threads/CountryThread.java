@@ -1,22 +1,29 @@
 package Threads;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Random;
-import java.util.Scanner;
 
 import GUI.GUI;
 
+/**
+ * This class represents a main sensor of a net of sub-sensors which are allocated in every country of the world.
+ * This sensor sends information about the names of the countries in which a sensor just deployed some information. 
+ * @author Group B
+ *
+ */
+
 public class CountryThread extends Thread {
 
-
-
 	private static String [] countries;
-
+	
+	
+	/**
+	 * Creates a vector of the number of all the countries in the world
+	 * and fills it with the names of all of them.
+	 */
 	public CountryThread() {
 		countries = new String[197];
 		ReadFile();
@@ -24,7 +31,9 @@ public class CountryThread extends Thread {
 
 
 
-
+/**
+ * Publishes a random country
+ */
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
@@ -35,6 +44,9 @@ public class CountryThread extends Thread {
 	}
 
 
+	/**
+	 * Acesses the specific file containing all the countries in the world and reads from there to the vector.
+	 */
 	private void ReadFile() {
 
 		InputStream in = getClass().getResourceAsStream("/Threads/Countries");	
@@ -55,6 +67,10 @@ public class CountryThread extends Thread {
 	}
 
 
+	/**
+	 * Returns the vector containing all the world's countries' names
+	 * @return world's countries' names
+	 */
 	public String[] getCountries() {
 		return countries;
 	}

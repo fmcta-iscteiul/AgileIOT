@@ -11,6 +11,11 @@ import Threads.CountryThread;
 import Threads.RouletteThread;
 import Threads.ThermoThread;
 
+/**
+ * Tester of the Threads representing the sensors 
+ * @author Group B
+ *
+ */
 
 class ThreadTester {
 
@@ -19,6 +24,9 @@ class ThreadTester {
 	ThermoThread thermo;
 	
 
+	/**
+	 * Creates a country sensor and addresses if it's not NULL upon creation and if, after reading it's file, has the same amount of lines than the number of countries in the file.
+	 */
 	
 	@Test
 	void CountriesTest() {
@@ -35,6 +43,11 @@ class ThreadTester {
 		assertTrue(countries.isInterrupted());
 		
 	}
+
+	/**
+	 * Creates termo sensor and tests whether it's running.
+	 */
+	
 	@Test
 	void ThermoTest() {
 		
@@ -47,6 +60,9 @@ class ThreadTester {
 		assertTrue(thermo.isAlive());
 		
 	}
+	/**
+	 * Creates a roulette thread and checks if the roulette hashmap has 37 numbers
+	 */
 	@Test
 	void RouletteTest() {
 		

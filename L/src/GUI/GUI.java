@@ -26,6 +26,15 @@ import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
 import Factories.SensorFactory;
 import Factories.SensorFactory.sensorType;
 
+/**
+ * This class creates and manages the GUI for the manual and automated sensors.
+ * It is responsible for the creation of the connection between the sensor and the broker, for the publishing of the messages
+ * and for the disconnection of sessions.
+ * 
+ * @author Group B
+ * @version 1.0
+ */
+
 public class GUI{
 
 	protected static String topic        = "MQTT Examples";
@@ -41,6 +50,11 @@ public class GUI{
 	protected static ArrayList<JButton> buttons = new ArrayList<>();
 
 
+	/**
+	 * This method creates the sensors, the connection, the GUI and all triggers for the sensors.
+	 * 
+	 * @throws MqttException
+	 */
 	public void workCycle() throws MqttException {
 		doCreate();
 		try {
@@ -224,7 +238,9 @@ public class GUI{
 		doConnection();
 	}
 
-
+	/**
+	 * Creates Client and connection options
+	 */
 	public void doCreate() {
 		try {
 			sampleClient = new MqttClient(broker, clientId, persistence);
@@ -238,6 +254,9 @@ public class GUI{
 		System.out.println("Connecting to broker: "+broker);
 	}
 
+	/**
+	 * Creates connections between broker and sensors
+	 */
 	public void doConnection() {
 		try {
 			sampleClient.connect(connOpts);
@@ -246,6 +265,10 @@ public class GUI{
 		}
 		System.out.println("Connected");
 	}
+
+	/**
+	 * Publishes message to the broker with specified content and topic
+	 */
 
 	public void doPublish() {
 		System.out.println("Publishing message: "+content +" on topic: "+ topic);
@@ -259,7 +282,11 @@ public class GUI{
 
 	}
 
+	/**
+	 * Disconects sensros from broker
+	 */
 	public void doDisconnect() {
+
 		System.out.println("Message published");
 		try {
 			sampleClient.disconnect();
@@ -269,6 +296,13 @@ public class GUI{
 		System.out.println("Disconnected");
 
 	}
+
+	/**
+	 * Static access to publishing a message in a certain topic
+	 * 
+	 * @param Stopic the topic to which send the message
+	 * @param Scontent the content of the message to send
+	 */
 	public synchronized static void sensorPublish(String Stopic, String Scontent) {
 
 		MqttMessage message = new MqttMessage(Scontent.getBytes());
@@ -279,38 +313,64 @@ public class GUI{
 			e.printStackTrace();
 		}		
 	}
+
 	/////////////Getters/////////////////////
 
+	/**
+	 * Returns the topic
+	 * @return selected topic
+	 */
 	public static String getTopic() {
 		return topic;
 	}
 
-
+	/**
+	 * Returns the desired Quality of Service
+	 * @return quality of service
+	 */
 	public static int getQos() {
 		return qos;
 	}
 
-
+	/**
+	 * Returns the broker associated with current runtime
+	 * @return
+	 * broker connected
+	 */
 	public static String getBroker() {
 		return broker;
 	}
 
 
+	/**
+	 * Returns the ID of the connected sensor simulator
+	 * @return ID of current session's sensor 
+	 */
 	public String getClientId() {
 		return clientId;
 	}
 
-
+	/**
+	 * Returns the exact sensor simulator
+	 * @return
+	 *sensor simulator in runtime
+	 */
 	public static MqttClient getSampleClient() {
 		return sampleClient;
 	}
 
-
+	/**
+	 * Returns the connection options of current session
+	 * @return connection options
+	 */
 	public MqttConnectOptions getConnOpts() {
 		return connOpts;
 	}
 
-
+	/**
+	 * Returns a list of all GUI buttons
+	 * @return list of all GUI buttons
+	 */
 	public ArrayList<JButton> getButtons() {
 		return buttons;
 	}

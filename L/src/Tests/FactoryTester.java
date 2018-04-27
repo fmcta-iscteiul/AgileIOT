@@ -8,11 +8,20 @@ import org.omg.DynamicAny.DynAnyPackage.InvalidValue;
 import Factories.SensorFactory;
 import Factories.SensorFactory.sensorType;
 
+/**
+ * This test class is run to acess the behavior of the factory used to create all sensor Threads
+ * @author Group B
+ *
+ */
 class FactoryTester {
 
+	/**
+	 * Creates a dummyFactory out of which it is tested the maximum  number of sensors in the beginning.
+	 * It creates various sensors and accesses if the last sensor is out of bonds.
+	 * @throws InvalidValue if maximum number of sensors is reached
+	 */
 	@Test
 	void testFactory() throws InvalidValue {
-	
 		
 		@SuppressWarnings("unused")
 		SensorFactory dummyFactory = new SensorFactory(); 

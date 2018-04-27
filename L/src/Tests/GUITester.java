@@ -10,8 +10,16 @@ import org.junit.jupiter.api.Test;
 import GUI.GUI;
 import Launcher.Launch;
 
+/**
+ * Tester class to test the GUI, the connections, the publishing, the connection options and the functionality of each button.
+ * @author Group B
+ *
+ */
 class GUITester {
 
+	/**
+	 * Test of the attributes of the connection
+	 */
 	@Test
 	void testAttributes() {
 		GUI gui = new GUI();
@@ -21,6 +29,9 @@ class GUITester {
 		assertEquals(gui.getClientId(),"JavaSample");
 	}
 
+	/**
+	 * Test the different states of the connection
+	 */
 	@Test
 	void testConnection() {		
 		GUI gui = new GUI();
@@ -33,8 +44,12 @@ class GUITester {
 
 	}
 
+	/**
+	 * Test connection options
+	 */
 	@Test
 	void testConnectionOptions() {
+		@SuppressWarnings("unused")
 		Launch l = new Launch();
 		GUI gui = new GUI();
 		gui.doCreate();
@@ -42,6 +57,9 @@ class GUITester {
 		gui.doPublish();
 	}
 
+	/**
+	 * Test functionality of each button
+	 */
 	@Test
 	void testButtons() {
 		GUI gui = new GUI();
