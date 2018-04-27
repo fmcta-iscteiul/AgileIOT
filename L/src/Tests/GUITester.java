@@ -19,20 +19,20 @@ class GUITester {
 		assertEquals(GUI.getQos(),2);
 		assertEquals(GUI.getBroker(),"tcp://iot.eclipse.org:1883");
 		assertEquals(gui.getClientId(),"JavaSample");
-		}
-	
+	}
+
 	@Test
 	void testConnection() {		
 		GUI gui = new GUI();
 		gui.doCreate();
 		gui.doConnection();
 		assertTrue(GUI.getSampleClient().isConnected());
-		
+
 		gui.doDisconnect();
 		assertFalse(GUI.getSampleClient().isConnected());
-		
+
 	}
-	
+
 	@Test
 	void testConnectionOptions() {
 		Launch l = new Launch();
@@ -48,7 +48,6 @@ class GUITester {
 		try {
 			gui.workCycle();
 		} catch (MqttException e) {
-			// TODO Auto-generated catch block
 		}
 		for (int i = 0; i < gui.getButtons().size(); i++) {
 			gui.getButtons().get(i).doClick();

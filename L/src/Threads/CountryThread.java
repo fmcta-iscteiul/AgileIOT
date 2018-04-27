@@ -1,7 +1,11 @@
 package Threads;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,8 +22,9 @@ public class CountryThread extends Thread {
 		ReadFile();
 	}
 
-	
-	
+
+
+
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
@@ -27,20 +32,24 @@ public class CountryThread extends Thread {
 			int choice = r.nextInt(197);
 			GUI.sensorPublish("Agile_Countries", countries[choice]);
 		}
-}
+	}
+
 
 	private void ReadFile() {
-		File countryFile = new File("C:/Users/Filipe/git/AgileIOT/L/Docs/Countries");
+
+		InputStream in = getClass().getResourceAsStream("/Threads/Countries");	
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
 		int iteration=0;
+
+		String currentCountry;
 		try {
-			Scanner scan = new Scanner(countryFile);
-			while(scan.hasNextLine()) {
-				countries[iteration]= scan.nextLine();
+			while((currentCountry =reader.readLine())!= null) {
+				countries[iteration]=currentCountry;
 				iteration++;
 			}
-			scan.close();
-			System.out.println(countries.length);
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}

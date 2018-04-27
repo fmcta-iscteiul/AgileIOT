@@ -1,7 +1,11 @@
 package Threads;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Scanner;
@@ -16,31 +20,36 @@ public class RouletteThread extends Thread {
 	public RouletteThread() {
 		ReadFile();	
 	}
-	
+
+
 	@Override
 	public void run() {
 		while(!this.isInterrupted()) {
-		Random r = new Random();
-		int choice = r.nextInt(37);
-		GUI.sensorPublish("Agile_Roulette","Your number is: "+choice+" ["+roulette.get(""+choice)+"]" );
+			Random r = new Random();
+			int choice = r.nextInt(37);
+			GUI.sensorPublish("Agile_Roulette","Your number is: "+choice+" ["+roulette.get(""+choice)+"]" );
 		}
-}
+	}
 
 	private void ReadFile() {
-		
-		File roulette_file = new File("C:/Users/Filipe/git/AgileIOT/L/Docs/Roulette");	
+
+		InputStream in = getClass().getResourceAsStream("/Threads/Roulette");	
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+		String currentNumber;
 		try {
-			Scanner scan = new Scanner(roulette_file);
-			
-			while(scan.hasNextLine()){
-				String[] token = scan.nextLine().split(" ");
+			while((currentNumber =reader.readLine())!= null) {
+				String[] token = currentNumber.split(" ");
 				roulette.put(token[0], token[1]);
 			}
-			scan.close();
-		} catch (FileNotFoundException e) {
-		}		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
-	
+
+
+
 	public HashMap<String, String> getRoulette() {
 		return roulette;
 	}
