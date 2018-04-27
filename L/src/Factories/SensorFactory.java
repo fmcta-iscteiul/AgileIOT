@@ -21,7 +21,6 @@ import Threads.ThermoThread;
 public class SensorFactory {
 
 	
-
 	public static final int MAX_SENSORS = 7;
 	public static int SensorNum =0;
 

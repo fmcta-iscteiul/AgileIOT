@@ -17,7 +17,6 @@ import GUI.GUI;
  *
  */
 public class RouletteThread extends Thread {
-
 	private static HashMap<String, String > roulette = new HashMap<String,String>(); 
 
 	

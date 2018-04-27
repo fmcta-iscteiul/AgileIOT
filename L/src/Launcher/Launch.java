@@ -10,6 +10,7 @@ import GUI.GUI;
  */
 public class Launch {
 
+
 	/**
 	 * Creates a sensor simulator and starts it's runtime
 	 * @param args

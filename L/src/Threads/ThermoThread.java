@@ -10,7 +10,6 @@ import GUI.GUI;
  *
  */
 public class ThermoThread extends Thread {
-
 /**
  * Sends the broker random temperature readings
  */

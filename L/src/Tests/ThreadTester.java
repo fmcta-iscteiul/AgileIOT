@@ -16,7 +16,6 @@ import Threads.ThermoThread;
  * @author Group B
  *
  */
-
 class ThreadTester {
 
 	CountryThread countries;

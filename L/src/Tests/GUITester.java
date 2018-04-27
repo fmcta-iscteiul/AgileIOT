@@ -17,6 +17,7 @@ import Launcher.Launch;
  */
 class GUITester {
 
+	
 	/**
 	 * Test of the attributes of the connection
 	 */
